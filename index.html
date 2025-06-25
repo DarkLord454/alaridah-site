@@ -1,0 +1,3694 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ثانوية العارضة التعليمية - جازان</title>
+    
+    <!-- External Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Internal Styles -->
+    <style>
+        /* ===================================== */
+        /* 1. CSS Reset and Root Variables      */
+        /* ===================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Primary Colors */
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            
+            /* Status Colors */
+            --success-color: #48bb78;
+            --danger-color: #f56565;
+            --warning-color: #ed8936;
+            --info-color: #4299e1;
+            
+            /* Neutral Colors */
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-gray: #e2e8f0;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Font Sizes */
+            --font-xs: 0.75rem;
+            --font-sm: 0.875rem;
+            --font-md: 1rem;
+            --font-lg: 1.125rem;
+            --font-xl: 1.25rem;
+            --font-2xl: 1.5rem;
+            --font-3xl: 2rem;
+            --font-4xl: 2.5rem;
+            
+            /* Transitions */
+            --transition-fast: 150ms ease-in-out;
+            --transition-base: 300ms ease-in-out;
+            --transition-slow: 500ms ease-in-out;
+        }
+
+        /* ===================================== */
+        /* 2. Base Typography                    */
+        /* ===================================== */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Arial', sans-serif;
+            font-size: var(--font-md);
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-md);
+        }
+
+        h1 { font-size: var(--font-4xl); }
+        h2 { font-size: var(--font-3xl); }
+        h3 { font-size: var(--font-2xl); }
+        h4 { font-size: var(--font-xl); }
+        h5 { font-size: var(--font-lg); }
+        h6 { font-size: var(--font-md); }
+
+        p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-base);
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* ===================================== */
+        /* 3. Layout Components                  */
+        /* ===================================== */
+        
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        /* Section */
+        .section {
+            padding: var(--spacing-2xl) 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn var(--transition-base);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Grid System */
+        .grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+        /* Flexbox Utilities */
+        .flex { display: flex; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .flex-column { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
+        .gap-1 { gap: var(--spacing-sm); }
+        .gap-2 { gap: var(--spacing-md); }
+        .gap-3 { gap: var(--spacing-lg); }
+
+        /* ===================================== */
+        /* 4. Header Styles                      */
+        /* ===================================== */
+        .header {
+            background-color: var(--white-color);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            padding: var(--spacing-md) 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+        }
+
+        /* Logo Styles */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: transform var(--transition-base);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: var(--font-2xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo-text h1 {
+            font-size: var(--font-xl);
+            margin-bottom: 0;
+        }
+
+        .logo-text p {
+            font-size: var(--font-sm);
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+
+        /* Navigation Styles */
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .nav-link {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-full);
+            color: var(--dark-color);
+            font-weight: 500;
+            font-size: var(--font-sm);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-gradient);
+            color: var(--white-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-link.active {
+            background: var(--primary-gradient);
+            color: var(--white-color);
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--light-color);
+            border-radius: var(--radius-full);
+            font-size: var(--font-sm);
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .user-role {
+            color: var(--gray-color);
+            font-size: var(--font-xs);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: var(--font-xl);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+
+        /* ===================================== */
+        /* 5. Hero Section                       */
+        /* ===================================== */
+        .hero {
+            background: var(--primary-gradient);
+            color: var(--white-color);
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: var(--spacing-2xl) 0;
+        }
+
+        .hero h2 {
+            font-size: clamp(var(--font-2xl), 5vw, var(--font-4xl));
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: var(--font-xl);
+            margin-bottom: var(--spacing-2xl);
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===================================== */
+        /* 6. Button Styles                      */
+        /* ===================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: var(--font-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Button Variants */
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: var(--white-color);
+        }
+
+        .btn-secondary {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: var(--white-color);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: var(--white-color);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--white-color);
+        }
+
+        /* Button Sizes */
+        .btn-sm {
+            padding: var(--spacing-xs) var(--spacing-md);
+            font-size: var(--font-xs);
+        }
+
+        .btn-lg {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: var(--font-lg);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* ===================================== */
+        /* 7. Card Styles                        */
+        /* ===================================== */
+        .card {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-header {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card-title {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-subtitle {
+            color: var(--gray-color);
+            font-size: var(--font-sm);
+        }
+
+        .card-body {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card-footer {
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: var(--font-2xl);
+            margin: 0 auto var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-clickable {
+            cursor: pointer;
+        }
+
+        .card-clickable:hover {
+            transform: translateY(-8px);
+        }
+
+        /* ===================================== */
+        /* 8. Form Styles                        */
+        /* ===================================== */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-sm);
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-size: var(--font-md);
+            font-family: inherit;
+            transition: all var(--transition-base);
+            background-color: var(--white-color);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control:disabled {
+            background-color: var(--light-color);
+            cursor: not-allowed;
+        }
+
+        /* Textarea */
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Select */
+        select.form-control {
+            cursor: pointer;
+        }
+
+        /* Form Validation */
+        .form-control.is-invalid {
+            border-color: var(--danger-color);
+        }
+
+        .form-control.is-valid {
+            border-color: var(--success-color);
+        }
+
+        .form-error {
+            color: var(--danger-color);
+            font-size: var(--font-sm);
+            margin-top: var(--spacing-xs);
+        }
+
+        /* ===================================== */
+        /* 9. Modal Styles                       */
+        /* ===================================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: var(--spacing-lg);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn var(--transition-fast);
+        }
+
+        .modal-content {
+            background-color: var(--white-color);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp var(--transition-base);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .modal-title {
+            font-size: var(--font-2xl);
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: none;
+            border: none;
+            font-size: var(--font-xl);
+            color: var(--gray-color);
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            transition: color var(--transition-base);
+        }
+
+        .modal-close:hover {
+            color: var(--danger-color);
+        }
+
+        /* ===================================== */
+        /* 10. Quiz Styles                       */
+        /* ===================================== */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--white-color);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .quiz-title {
+            font-size: var(--font-2xl);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .quiz-info {
+            color: var(--gray-color);
+            font-size: var(--font-md);
+        }
+
+        /* Quiz Timer */
+        .quiz-timer {
+            background-color: var(--danger-color);
+            color: var(--white-color);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-lg);
+        }
+
+        .quiz-timer.warning {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Quiz Progress */
+        .quiz-progress {
+            height: 8px;
+            background-color: var(--light-gray);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: width var(--transition-base);
+        }
+
+        /* Quiz Question */
+        .quiz-question {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.6;
+        }
+
+        /* Quiz Options */
+        .quiz-options {
+            display: grid;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .quiz-option {
+            padding: var(--spacing-md);
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            background-color: var(--white-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(102, 126, 234, 0.05);
+            transform: translateX(-4px);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success-color);
+            background-color: rgba(72, 187, 120, 0.1);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--danger-color);
+            background-color: rgba(245, 101, 101, 0.1);
+        }
+
+        /* Quiz Controls */
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        /* Quiz Results */
+        .quiz-results {
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .quiz-score {
+            font-size: var(--font-4xl);
+            font-weight: 700;
+            margin: var(--spacing-xl) 0;
+        }
+
+        .quiz-score.excellent {
+            color: var(--success-color);
+        }
+
+        .quiz-score.good {
+            color: var(--warning-color);
+        }
+
+        .quiz-score.poor {
+            color: var(--danger-color);
+        }
+
+        /* ===================================== */
+        /* 11. Admin Panel Styles                */
+        /* ===================================== */
+        .admin-panel {
+            background-color: rgba(102, 126, 234, 0.05);
+            border: 2px dashed var(--primary-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .admin-panel-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .admin-panel-title {
+            font-size: var(--font-xl);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        /* ===================================== */
+        /* 12. Announcement Styles               */
+        /* ===================================== */
+        .announcement {
+            background-color: var(--white-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            border-right: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+
+        .announcement:hover {
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .announcement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .announcement-title {
+            font-size: var(--font-lg);
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .announcement-meta {
+            display: flex;
+            gap: var(--spacing-md);
+            font-size: var(--font-sm);
+            color: var(--gray-color);
+        }
+
+        .announcement-content {
+            color: var(--gray-color);
+            line-height: 1.6;
+        }
+
+        /* ===================================== */
+        /* 13. Resource Styles                   */
+        /* ===================================== */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .resource-card {
+            background-color: var(--white-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .resource-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-lg);
+            font-size: var(--font-3xl);
+            color: var(--white-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .resource-title {
+            font-size: var(--font-lg);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .resource-description {
+            color: var(--gray-color);
+            font-size: var(--font-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* ===================================== */
+        /* 14. Notification Styles               */
+        /* ===================================== */
+        .notification {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            color: var(--white-color);
+            font-weight: 600;
+            box-shadow: var(--shadow-xl);
+            animation: slideInRight var(--transition-base);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            max-width: 400px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.success {
+            background-color: var(--success-color);
+        }
+
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+
+        .notification.info {
+            background-color: var(--info-color);
+        }
+
+        /* ===================================== */
+        /* 15. Footer Styles                     */
+        /* ===================================== */
+        .footer {
+            background-color: var(--dark-color);
+            color: var(--white-color);
+            padding: var(--spacing-2xl) 0;
+            margin-top: var(--spacing-2xl);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .footer-section h4 {
+            font-size: var(--font-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-section p {
+            color: #cbd5e0;
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            display: block;
+            padding: var(--spacing-xs) 0;
+            transition: color var(--transition-base);
+        }
+
+        .footer-section a:hover {
+            color: var(--white-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: var(--font-lg);
+            transition: all var(--transition-base);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* ===================================== */
+        /* 16. Utility Classes                   */
+        /* ===================================== */
+        
+        /* Display */
+        .hidden { display: none !important; }
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        .flex { display: flex; }
+        .grid { display: grid; }
+
+        /* Text Alignment */
+        .text-left { text-align: left; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+
+        /* Font Weight */
+        .font-normal { font-weight: 400; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+
+        /* Margins */
+        .mt-1 { margin-top: var(--spacing-sm); }
+        .mt-2 { margin-top: var(--spacing-md); }
+        .mt-3 { margin-top: var(--spacing-lg); }
+        .mb-1 { margin-bottom: var(--spacing-sm); }
+        .mb-2 { margin-bottom: var(--spacing-md); }
+        .mb-3 { margin-bottom: var(--spacing-lg); }
+
+        /* Padding */
+        .p-1 { padding: var(--spacing-sm); }
+        .p-2 { padding: var(--spacing-md); }
+        .p-3 { padding: var(--spacing-lg); }
+
+        /* Width */
+        .w-full { width: 100%; }
+
+        /* Cursor */
+        .cursor-pointer { cursor: pointer; }
+
+        /* ===================================== */
+        /* 17. Loading Styles                    */
+        /* ===================================== */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .spinner {
+            border: 3px solid var(--light-gray);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===================================== */
+        /* 18. Responsive Design                 */
+        /* ===================================== */
+        
+        /* Tablet Styles */
+        @media (max-width: 992px) {
+            .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            /* Typography */
+            h1 { font-size: var(--font-3xl); }
+            h2 { font-size: var(--font-2xl); }
+            h3 { font-size: var(--font-xl); }
+            
+            /* Header */
+            .header-content {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            /* Navigation */
+            .navigation {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--white-color);
+                box-shadow: var(--shadow-md);
+                padding: var(--spacing-md);
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .navigation.active {
+                display: flex;
+            }
+            
+            .nav-link {
+                width: 100%;
+                text-align: center;
+            }
+            
+            /* Mobile Menu Button */
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            /* Grid System */
+            .grid-cols-2,
+            .grid-cols-3,
+            .grid-cols-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Hero */
+            .hero {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .hero h2 {
+                font-size: var(--font-2xl);
+            }
+            
+            .hero p {
+                font-size: var(--font-md);
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+            }
+            
+            /* Cards */
+            .card {
+                padding: var(--spacing-lg);
+            }
+            
+            /* Modal */
+            .modal-content {
+                padding: var(--spacing-lg);
+                margin: var(--spacing-md);
+            }
+            
+            /* Quiz */
+            .quiz-container {
+                padding: var(--spacing-lg);
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+            }
+            
+            .quiz-controls .btn {
+                width: 100%;
+            }
+            
+            /* Footer */
+            .footer-content {
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--spacing-md);
+            }
+            
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+        }
+
+        /* ===================================== */
+        /* 19. Print Styles                      */
+        /* ===================================== */
+        @media print {
+            .header,
+            .footer,
+            .hero,
+            .btn,
+            .modal,
+            .notification,
+            .admin-panel,
+            .mobile-menu-btn {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* ===================================== */
+        /* 20. Accessibility                     */
+        /* ===================================== */
+        
+        /* Focus Styles */
+        *:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Skip to Content */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .skip-to-content:focus {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: auto;
+            height: auto;
+            padding: var(--spacing-md);
+            background-color: var(--dark-color);
+            color: var(--white-color);
+            z-index: 9999;
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #0066cc;
+                --secondary-color: #663399;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to Content (Accessibility) -->
+    <a href="#main-content" class="skip-to-content">تخطي إلى المحتوى الرئيسي</a>
+    
+    <!-- ============================================ -->
+    <!-- Header Section                               -->
+    <!-- ============================================ -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="header-content">
+                <!-- Logo -->
+                <a href="#" class="logo" onclick="App.navigation.goToPage('home')">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ثانوية العارضة</h1>
+                        <p>جازان - المملكة العربية السعودية</p>
+                    </div>
+                </a>
+                
+                <!-- Navigation -->
+                <nav class="navigation" id="mainNavigation">
+                    <a href="#" class="nav-link active" data-page="home" onclick="App.navigation.goToPage('home')">الرئيسية</a>
+                    <a href="#" class="nav-link" data-page="achievements" onclick="App.navigation.goToPage('achievements')">الإنجازات</a>
+                    <a href="#" class="nav-link" data-page="tests" onclick="App.navigation.goToPage('tests')">الاختبارات</a>
+                    <a href="#" class="nav-link" data-page="plans" onclick="App.navigation.goToPage('plans')">خطط المذاكرة</a>
+                    <a href="#" class="nav-link" data-page="resources" onclick="App.navigation.goToPage('resources')">المصادر</a>
+                    <a href="#" class="nav-link" data-page="contact" onclick="App.navigation.goToPage('contact')">التواصل</a>
+                    <a href="#" class="nav-link" data-page="announcements" onclick="App.navigation.goToPage('announcements')">الإعلانات</a>
+                </nav>
+                
+                <!-- User Menu -->
+                <div class="user-menu">
+                    <!-- Auth Buttons (Shown when logged out) -->
+                    <div id="authButtons">
+                        <button class="btn btn-secondary btn-sm" onclick="App.auth.showLoginModal()">
+                            <i class="fas fa-sign-in-alt"></i>
+                            دخول
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="App.auth.showRegisterModal()">
+                            <i class="fas fa-user-plus"></i>
+                            تسجيل
+                        </button>
+                    </div>
+                    
+                    <!-- User Info (Shown when logged in) -->
+                    <div id="userInfo" class="user-info hidden">
+                        <div>
+                            <div class="user-name" id="currentUserName"></div>
+                            <div class="user-role" id="currentUserRole"></div>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="App.auth.logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            خروج
+                        </button>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="mobile-menu-btn" onclick="App.navigation.toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- ============================================ -->
+    <!-- Hero Section                                 -->
+    <!-- ============================================ -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="container">
+                <h2>مرحباً بك في منصة ثانوية العارضة التعليمية</h2>
+                <p>رحلتك نحو التميز الأكاديمي والنجاح في اختبارات القدرات والتحصيلي تبدأ من هنا</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-secondary btn-lg" onclick="App.navigation.goToPage('tests')">
+                        <i class="fas fa-rocket"></i>
+                        ابدأ الاختبارات
+                    </button>
+                    <button class="btn btn-primary btn-lg" style="background-color: white; color: var(--primary-color);" onclick="App.navigation.goToPage('achievements')">
+                        <i class="fas fa-trophy"></i>
+                        إنجازاتنا المتميزة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ============================================ -->
+    <!-- Main Content                                 -->
+    <!-- ============================================ -->
+    <main id="main-content">
+        <!-- ======================================== -->
+        <!-- Home Section                             -->
+        <!-- ======================================== -->
+        <section id="home" class="section active">
+            <div class="container">
+                <!-- Admin Panel (Shown for admin users) -->
+                <div id="adminPanel" class="admin-panel hidden">
+                    <div class="admin-panel-header">
+                        <i class="fas fa-cogs" style="font-size: var(--font-2xl); color: var(--primary-color);"></i>
+                        <h3 class="admin-panel-title">لوحة التحكم</h3>
+                    </div>
+                    <div class="admin-grid">
+                        <button class="btn btn-primary btn-block" onclick="App.admin.showAddAnnouncementModal()">
+                            <i class="fas fa-bullhorn"></i>
+                            إضافة إعلان
+                        </button>
+                        <button class="btn btn-primary btn-block" onclick="App.admin.showAddResourceModal()">
+                            <i class="fas fa-book"></i>
+                            إضافة مصدر
+                        </button>
+                        <button class="btn btn-primary btn-block" onclick="App.admin.showUsersManagement()">
+                            <i class="fas fa-users"></i>
+                            إدارة المستخدمين
+                        </button>
+                        <button class="btn btn-primary btn-block" onclick="App.admin.showStatistics()">
+                            <i class="fas fa-chart-bar"></i>
+                            الإحصائيات
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Features Grid -->
+                <div class="grid grid-cols-3">
+                    <div class="card card-clickable" onclick="App.navigation.goToPage('achievements')">
+                        <div class="card-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="text-center">إنجازات المدرسة</h3>
+                        <p class="text-center">تعرف على إنجازاتنا المتميزة في مختلف المجالات العلمية والثقافية والرياضية</p>
+                    </div>
+                    
+                    <div class="card card-clickable" onclick="App.navigation.goToPage('tests')">
+                        <div class="card-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="text-center">اختبارات تدريبية</h3>
+                        <p class="text-center">اختبر قدراتك مع اختباراتنا المحاكية للقدرات والتحصيلي مع شرح مفصل</p>
+                    </div>
+                    
+                    <div class="card card-clickable" onclick="App.navigation.goToPage('plans')">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="text-center">خطط المذاكرة</h3>
+                        <p class="text-center">خطط دراسية مدروسة ومنظمة لتحقيق أفضل النتائج في الاختبارات</p>
+                    </div>
+                    
+                    <div class="card card-clickable" onclick="App.navigation.goToPage('resources')">
+                        <div class="card-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="text-center">المصادر التعليمية</h3>
+                        <p class="text-center">مكتبة شاملة من المراجع والشروحات والفيديوهات التعليمية</p>
+                    </div>
+                    
+                    <div class="card card-clickable" onclick="App.navigation.goToPage('contact')">
+                        <div class="card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="text-center">تواصل معنا</h3>
+                        <p class="text-center">نحن هنا لمساعدتك في رحلتك التعليمية والإجابة على استفساراتك</p>
+                    </div>
+                    
+                    <div class="card card-clickable" onclick="App.navigation.goToPage('announcements')">
+                        <div class="card-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-center">الإعلانات</h3>
+                        <p class="text-center">تابع آخر الأخبار والمستجدات والفعاليات في المدرسة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================================== -->
+        <!-- Achievements Section                     -->
+        <!-- ======================================== -->
+        <section id="achievements" class="section">
+            <div class="container">
+                <h2 class="text-center mb-3">إنجازات ثانوية العارضة</h2>
+                <p class="text-center mb-3" style="color: var(--gray-color);">نفتخر بإنجازاتنا المتميزة على مستوى منطقة جازان والمملكة</p>
+                
+                <div class="grid grid-cols-3">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3 class="text-center">التميز الأكاديمي</h3>
+                        <p class="text-center">المركز الأول على مستوى منطقة جازان في نتائج الثانوية العامة لثلاث سنوات متتالية بنسبة نجاح 98%</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3 class="text-center">التفوق العلمي</h3>
+                        <p class="text-center">15 جائزة في مسابقات العلوم والرياضيات على مستوى المملكة، و 3 براءات اختراع مسجلة</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="text-center">الإبداع الثقافي</h3>
+                        <p class="text-center">تميز طلابنا في مسابقات الشعر والأدب والخطابة وحصولهم على مراكز متقدمة</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <h3 class="text-center">البطولات الرياضية</h3>
+                        <p class="text-center">بطولة المنطقة في كرة القدم وألعاب القوى للعام الثالث على التوالي</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-center">الابتكار التقني</h3>
+                        <p class="text-center">7 مشاريع فائزة في معارض الابتكار و 5 تطبيقات برمجية تخدم المجتمع</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3 class="text-center">العمل التطوعي</h3>
+                        <p class="text-center">أكثر من 1000 ساعة تطوعية سنوياً في خدمة المجتمع والبيئة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================================== -->
+        <!-- Tests Section                            -->
+        <!-- ======================================== -->
+        <section id="tests" class="section">
+            <div class="container">
+                <!-- Tests List View -->
+                <div id="testsListView">
+                    <h2 class="text-center mb-3">الاختبارات التدريبية</h2>
+                    <p class="text-center mb-3" style="color: var(--gray-color);">استعد لاختبارات القدرات والتحصيلي مع اختباراتنا المحاكية</p>
+                    
+                    <div class="grid grid-cols-2" style="max-width: 800px; margin: 0 auto;">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3>اختبار القدرات العامة</h3>
+                                <p>الجزء اللفظي والكمي</p>
+                            </div>
+                            <div class="card-body text-center">
+                                <p><i class="fas fa-clock"></i> المدة: 120 دقيقة</p>
+                                <p><i class="fas fa-question-circle"></i> عدد الأسئلة: 30 سؤال</p>
+                                <p><i class="fas fa-chart-line"></i> مستوى الصعوبة: متوسط</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary btn-block" onclick="App.quiz.startQuiz('qudurat')">
+                                    <i class="fas fa-play"></i>
+                                    ابدأ الاختبار
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3>الاختبار التحصيلي</h3>
+                                <p>العلوم والرياضيات</p>
+                            </div>
+                            <div class="card-body text-center">
+                                <p><i class="fas fa-clock"></i> المدة: 90 دقيقة</p>
+                                <p><i class="fas fa-question-circle"></i> عدد الأسئلة: 20 سؤال</p>
+                                <p><i class="fas fa-chart-line"></i> مستوى الصعوبة: متقدم</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-primary btn-block" onclick="App.quiz.startQuiz('tahsili')">
+                                    <i class="fas fa-play"></i>
+                                    ابدأ الاختبار
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quiz View (Hidden by default) -->
+                <div id="quizView" class="quiz-container hidden">
+                    <!-- Quiz content will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================================== -->
+        <!-- Study Plans Section                      -->
+        <!-- ======================================== -->
+        <section id="plans" class="section">
+            <div class="container">
+                <h2 class="text-center mb-3">خطط المذاكرة المنظمة</h2>
+                <p class="text-center mb-3" style="color: var(--gray-color);">برامج دراسية مصممة بعناية لتحقيق أفضل النتائج</p>
+                
+                <div class="grid grid-cols-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-brain"></i> خطة القدرات العامة</h3>
+                            <p class="card-subtitle">برنامج 8 أسابيع</p>
+                        </div>
+                        <div class="card-body">
+                            <ul style="line-height: 2; color: var(--gray-color);">
+                                <li><strong>الأسبوع 1-2:</strong> أساسيات التناظر اللفظي وإكمال الجمل</li>
+                                <li><strong>الأسبوع 3-4:</strong> المفردات والاستيعاب المقروء</li>
+                                <li><strong>الأسبوع 5-6:</strong> الأساسيات الكمية والمتتابعات</li>
+                                <li><strong>الأسبوع 7-8:</strong> المراجعة الشاملة والاختبارات التجريبية</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-block" onclick="App.plans.downloadPlan('qudurat')">
+                                <i class="fas fa-download"></i>
+                                تحميل الخطة الكاملة
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-flask"></i> خطة التحصيلي</h3>
+                            <p class="card-subtitle">برنامج 10 أسابيع</p>
+                        </div>
+                        <div class="card-body">
+                            <ul style="line-height: 2; color: var(--gray-color);">
+                                <li><strong>الأسبوع 1-2:</strong> مراجعة أساسيات الرياضيات</li>
+                                <li><strong>الأسبوع 3-4:</strong> الفيزياء والكيمياء الأساسية</li>
+                                <li><strong>الأسبوع 5-6:</strong> الأحياء والعلوم المتقدمة</li>
+                                <li><strong>الأسبوع 7-8:</strong> التطبيقات والمسائل المعقدة</li>
+                                <li><strong>الأسبوع 9-10:</strong> المراجعة النهائية والاختبارات</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-block" onclick="App.plans.downloadPlan('tahsili')">
+                                <i class="fas fa-download"></i>
+                                تحميل الخطة الكاملة
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-check"></i> الجدول اليومي</h3>
+                            <p class="card-subtitle">تنظيم الوقت اليومي</p>
+                        </div>
+                        <div class="card-body">
+                            <ul style="line-height: 2; color: var(--gray-color);">
+                                <li><strong>6:00 - 8:00 ص:</strong> مراجعة الجزء اللفظي</li>
+                                <li><strong>8:00 - 10:00 ص:</strong> حل تمارين الجزء الكمي</li>
+                                <li><strong>4:00 - 6:00 م:</strong> دراسة المواد العلمية</li>
+                                <li><strong>8:00 - 9:00 م:</strong> اختبار تجريبي مصغر</li>
+                                <li><strong>9:00 - 10:00 م:</strong> مراجعة الأخطاء</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary btn-block" onclick="App.plans.downloadPlan('daily')">
+                                <i class="fas fa-download"></i>
+                                تحميل الجدول اليومي
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================================== -->
+        <!-- Resources Section                        -->
+        <!-- ======================================== -->
+        <section id="resources" class="section">
+            <div class="container">
+                <h2 class="text-center mb-3">المصادر التعليمية</h2>
+                <p class="text-center mb-3" style="color: var(--gray-color);">مكتبة شاملة من المواد التعليمية والشروحات</p>
+                
+                <div id="resourcesGrid" class="resource-grid">
+                    <!-- Resources will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================================== -->
+        <!-- Contact Section                          -->
+        <!-- ======================================== -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="text-center mb-3">تواصل معنا</h2>
+                <p class="text-center mb-3" style="color: var(--gray-color);">نحن هنا لمساعدتك في رحلتك التعليمية</p>
+                
+                <div class="grid grid-cols-2" style="max-width: 1000px; margin: 0 auto;">
+                    <!-- Contact Form -->
+                    <div class="card">
+                        <form id="contactForm" onsubmit="App.contact.handleSubmit(event)">
+                            <div class="form-group">
+                                <label class="form-label">الاسم الكامل</label>
+                                <input type="text" class="form-control" id="contactName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">البريد الإلكتروني</label>
+                                <input type="email" class="form-control" id="contactEmail" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">الموضوع</label>
+                                <select class="form-control" id="contactSubject" required>
+                                    <option value="">اختر الموضوع</option>
+                                    <option value="academic">استفسار أكاديمي</option>
+                                    <option value="technical">دعم تقني</option>
+                                    <option value="suggestion">اقتراح</option>
+                                    <option value="complaint">شكوى</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">الرسالة</label>
+                                <textarea class="form-control" id="contactMessage" rows="5" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-paper-plane"></i>
+                                إرسال الرسالة
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div>
+                        <div class="card mb-3">
+                            <div class="text-center">
+                                <i class="fas fa-phone" style="font-size: var(--font-3xl); color: var(--primary-color); margin-bottom: var(--spacing-md);"></i>
+                                <h4>الهاتف</h4>
+                                <p>011-1234567</p>
+                                <p>011-1234568 (الإرشاد الأكاديمي)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-3">
+                            <div class="text-center">
+                                <i class="fas fa-envelope" style="font-size: var(--font-3xl); color: var(--primary-color); margin-bottom: var(--spacing-md);"></i>
+                                <h4>البريد الإلكتروني</h4>
+                                <p>info@alaridah-hs.edu.sa</p>
+                                <p>academic@alaridah-hs.edu.sa</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="text-center">
+                                <i class="fas fa-map-marker-alt" style="font-size: var(--font-3xl); color: var(--primary-color); margin-bottom: var(--spacing-md);"></i>
+                                <h4>العنوان</h4>
+                                <p>العارضة، جازان</p>
+                                <p>المملكة العربية السعودية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================================== -->
+        <!-- Announcements Section                    -->
+        <!-- ======================================== -->
+        <section id="announcements" class="section">
+            <div class="container">
+                <h2 class="text-center mb-3">الإعلانات والمستجدات</h2>
+                <p class="text-center mb-3" style="color: var(--gray-color);">تابع آخر الأخبار والفعاليات في المدرسة</p>
+                
+                <div id="announcementsList" style="max-width: 800px; margin: 0 auto;">
+                    <!-- Announcements will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- ============================================ -->
+    <!-- Footer                                       -->
+    <!-- ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>عن المدرسة</h4>
+                    <p>ثانوية العارضة، منارة العلم والمعرفة في منطقة جازان. نسعى لبناء جيل متميز أكاديمياً وأخلاقياً، ونفخر بإنجازاتنا المتميزة على مستوى المنطقة والمملكة.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" onclick="App.social.openLink('twitter')">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" onclick="App.social.openLink('instagram')">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" onclick="App.social.openLink('youtube')">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-link" onclick="App.social.openLink('telegram')">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <a href="#" onclick="App.navigation.goToPage('tests')">الاختبارات التدريبية</a>
+                    <a href="#" onclick="App.navigation.goToPage('plans')">خطط المذاكرة</a>
+                    <a href="#" onclick="App.navigation.goToPage('resources')">المصادر التعليمية</a>
+                    <a href="#" onclick="App.navigation.goToPage('achievements')">إنجازات المدرسة</a>
+                    <a href="#" onclick="App.navigation.goToPage('contact')">تواصل معنا</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>معلومات الاتصال</h4>
+                    <p><i class="fas fa-phone"></i> 011-1234567</p>
+                    <p><i class="fas fa-envelope"></i> info@alaridah-hs.edu.sa</p>
+                    <p><i class="fas fa-map-marker-alt"></i> العارضة، جازان</p>
+                    <p><i class="fas fa-clock"></i> الأحد - الخميس: 7:00 ص - 2:00 م</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 ثانوية العارضة. جميع الحقوق محفوظة.</p>
+                <p style="margin-top: var(--spacing-sm); font-size: var(--font-sm);">
+                    تصميم وتطوير: عبدالله حسين نخيفي
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ============================================ -->
+    <!-- Modal Container                              -->
+    <!-- ============================================ -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="App.modal.close()">&times;</button>
+            <div id="modalBody">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- ============================================ -->
+    <!-- JavaScript Section                           -->
+    <!-- ============================================ -->
+    <script>
+        // ============================================
+        // Application Namespace
+        // ============================================
+        const App = {
+            // ========================================
+            // Configuration and Constants
+            // ========================================
+            config: {
+                appName: 'منصة ثانوية العارضة التعليمية',
+                version: '1.0.0',
+                author: 'عبدالله حسين نخيفي',
+                debug: true
+            },
+            
+            // ========================================
+            // Application State
+            // ========================================
+            state: {
+                currentUser: null,
+                currentPage: 'home',
+                isMobileMenuOpen: false,
+                quizInProgress: false,
+                currentQuiz: null,
+                currentQuestion: 0,
+                quizAnswers: [],
+                quizTimer: null,
+                timeRemaining: 0
+            },
+            
+            // ========================================
+            // Data Storage
+            // ========================================
+            data: {
+                // Default Users
+                users: {
+                    'abdullah_admin': {
+                        name: 'عبدالله حسين نخيفي',
+                        password: 'admin123',
+                        role: 'admin',
+                        displayRole: 'مدير الموقع'
+                    },
+                    'saddam_principal': {
+                        name: 'أستاذ صدام حسين هزازي',
+                        password: 'principal123',
+                        role: 'principal',
+                        displayRole: 'مدير المدرسة'
+                    },
+                    'mohammed_teacher': {
+                        name: 'أستاذ محمد عبده هزازي',
+                        password: 'teacher123',
+                        role: 'teacher',
+                        displayRole: 'معلم'
+                    }
+                },
+                
+                // Quiz Attempts
+                quizAttempts: {},
+                
+                // Announcements
+                announcements: [
+                    {
+                        id: 1,
+                        title: 'بدء التسجيل في اختبارات القدرات',
+                        content: 'يسر إدارة المدرسة الإعلان عن فتح باب التسجيل لاختبارات القدرات العامة للفترة الثانية من العام الدراسي. التسجيل متاح حتى نهاية الأسبوع القادم.',
+                        date: new Date().toLocaleDateString('ar-SA'),
+                        author: 'إدارة المدرسة'
+                    },
+                    {
+                        id: 2,
+                        title: 'ورشة عمل للتحضير للتحصيلي',
+                        content: 'تقام يوم الأحد القادم ورشة عمل مكثفة للتحضير للاختبار التحصيلي بحضور نخبة من المدرسين المتخصصين. التسجيل مفتوح لجميع طلاب الصف الثالث.',
+                        date: new Date().toLocaleDateString('ar-SA'),
+                        author: 'قسم الإرشاد الأكاديمي'
+                    }
+                ],
+                
+                // Resources
+                resources: [
+                    {
+                        id: 1,
+                        title: 'فيديوهات شرح القدرات',
+                        description: 'مجموعة شاملة من الفيديوهات التعليمية لشرح جميع أجزاء اختبار القدرات',
+                        type: 'video',
+                        icon: 'fas fa-video',
+                        author: 'قسم الرياضيات',
+                        date: new Date().toLocaleDateString('ar-SA')
+                    },
+                    {
+                        id: 2,
+                        title: 'ملخصات PDF للتحصيلي',
+                        description: 'ملخصات شاملة لجميع المواد العلمية للاختبار التحصيلي',
+                        type: 'pdf',
+                        icon: 'fas fa-file-pdf',
+                        author: 'قسم العلوم',
+                        date: new Date().toLocaleDateString('ar-SA')
+                    },
+                    {
+                        id: 3,
+                        title: 'بنك الأسئلة المحلولة',
+                        description: 'أكثر من 1000 سؤال محلول في القدرات والتحصيلي',
+                        type: 'questions',
+                        icon: 'fas fa-question-circle',
+                        author: 'الفريق الأكاديمي',
+                        date: new Date().toLocaleDateString('ar-SA')
+                    }
+                ],
+                
+                // Quiz Data
+                quizData: {
+                    qudurat: {
+                        title: 'اختبار القدرات العامة',
+                        duration: 120, // minutes
+                        questions: [
+                            // التناظر اللفظي
+                            {
+                                id: 1,
+                                type: 'analogy',
+                                question: 'طبيب : مستشفى = معلم : ؟',
+                                options: ['مدرسة', 'كتاب', 'طالب', 'قلم'],
+                                correct: 0,
+                                explanation: 'الطبيب يعمل في المستشفى كما المعلم يعمل في المدرسة'
+                            },
+                            {
+                                id: 2,
+                                type: 'analogy',
+                                question: 'قلم : كتابة = فرشاة : ؟',
+                                options: ['لوحة', 'رسم', 'ألوان', 'فنان'],
+                                correct: 1,
+                                explanation: 'القلم أداة للكتابة كما الفرشاة أداة للرسم'
+                            },
+                            {
+                                id: 3,
+                                type: 'analogy',
+                                question: 'شمس : نهار = قمر : ؟',
+                                options: ['نجوم', 'ليل', 'ضوء', 'سماء'],
+                                correct: 1,
+                                explanation: 'الشمس تظهر في النهار كما القمر يظهر في الليل'
+                            },
+                            
+                            // إكمال الجمل
+                            {
+                                id: 4,
+                                type: 'completion',
+                                question: 'النجاح لا يأتي بالتمني ولكن بـ ____',
+                                options: ['الحظ', 'الصدفة', 'العمل الجاد', 'الانتظار'],
+                                correct: 2,
+                                explanation: 'النجاح يتطلب العمل الجاد والمثابرة'
+                            },
+                            {
+                                id: 5,
+                                type: 'completion',
+                                question: 'كلما زادت المعرفة ____ الجهل',
+                                options: ['زاد', 'قل', 'ثبت', 'تضاعف'],
+                                correct: 1,
+                                explanation: 'العلاقة عكسية بين المعرفة والجهل'
+                            },
+                            
+                            // معاني المفردات
+                            {
+                                id: 6,
+                                type: 'vocabulary',
+                                question: 'معنى كلمة "أسهب"؟',
+                                options: ['اختصر', 'أطال', 'أوضح', 'كتب'],
+                                correct: 1,
+                                explanation: 'أسهب تعني أطال في الكلام أو الشرح'
+                            },
+                            {
+                                id: 7,
+                                type: 'vocabulary',
+                                question: 'ضد كلمة "شحيح"؟',
+                                options: ['بخيل', 'كريم', 'غني', 'فقير'],
+                                correct: 1,
+                                explanation: 'شحيح تعني بخيل وضدها كريم'
+                            },
+                            
+                            // الخطأ السياقي
+                            {
+                                id: 8,
+                                type: 'context',
+                                question: 'أي كلمة لا تنتمي للمجموعة: سيارة، طائرة، قطار، كتاب',
+                                options: ['سيارة', 'طائرة', 'قطار', 'كتاب'],
+                                correct: 3,
+                                explanation: 'الكتاب ليس وسيلة مواصلات'
+                            },
+                            
+                            // المتتابعات
+                            {
+                                id: 9,
+                                type: 'sequence',
+                                question: 'أكمل المتتابعة: 2، 6، 18، 54، ؟',
+                                options: ['108', '162', '216', '270'],
+                                correct: 1,
+                                explanation: 'كل رقم يُضرب في 3 (54 × 3 = 162)'
+                            },
+                            {
+                                id: 10,
+                                type: 'sequence',
+                                question: '1، 4، 9، 16، ؟',
+                                options: ['20', '24', '25', '30'],
+                                correct: 2,
+                                explanation: 'مربعات الأعداد: 1²، 2²، 3²، 4²، 5²=25'
+                            },
+                            
+                            // المسائل الكمية
+                            {
+                                id: 11,
+                                type: 'math',
+                                question: 'إذا كان س + 5 = 12، فما قيمة 2س؟',
+                                options: ['7', '12', '14', '17'],
+                                correct: 2,
+                                explanation: 'س = 7، إذن 2س = 14'
+                            },
+                            {
+                                id: 12,
+                                type: 'math',
+                                question: 'مساحة مربع طول ضلعه 8 سم؟',
+                                options: ['16', '32', '64', '128'],
+                                correct: 2,
+                                explanation: 'مساحة المربع = الضلع² = 8² = 64'
+                            },
+                            {
+                                id: 13,
+                                type: 'math',
+                                question: '√144 = ؟',
+                                options: ['11', '12', '13', '14'],
+                                correct: 1,
+                                explanation: '12 × 12 = 144'
+                            },
+                            
+                            // النسبة والتناسب
+                            {
+                                id: 14,
+                                type: 'ratio',
+                                question: 'ما هو 25% من 80؟',
+                                options: ['15', '20', '25', '30'],
+                                correct: 1,
+                                explanation: '25% × 80 = 0.25 × 80 = 20'
+                            },
+                            {
+                                id: 15,
+                                type: 'ratio',
+                                question: 'إذا كانت النسبة 3:5 = س:15، فما قيمة س؟',
+                                options: ['9', '10', '12', '25'],
+                                correct: 0,
+                                explanation: '3/5 = س/15، إذن س = (3×15)/5 = 9'
+                            },
+                            
+                            // الهندسة
+                            {
+                                id: 16,
+                                type: 'geometry',
+                                question: 'محيط دائرة نصف قطرها 7 (π = 22/7)؟',
+                                options: ['22', '44', '88', '154'],
+                                correct: 1,
+                                explanation: 'المحيط = 2πr = 2 × (22/7) × 7 = 44'
+                            },
+                            {
+                                id: 17,
+                                type: 'geometry',
+                                question: 'مساحة مثلث قاعدته 10 وارتفاعه 6؟',
+                                options: ['30', '60', '16', '20'],
+                                correct: 0,
+                                explanation: 'المساحة = ½ × القاعدة × الارتفاع = ½ × 10 × 6 = 30'
+                            },
+                            
+                            // المنطق
+                            {
+                                id: 18,
+                                type: 'logic',
+                                question: 'إذا كان كل الطيور لها أجنحة، والعصفور طائر، فإن:',
+                                options: ['العصفور ليس له أجنحة', 'العصفور له أجنحة', 'بعض الطيور لها أجنحة', 'لا شيء مما سبق'],
+                                correct: 1,
+                                explanation: 'استنتاج منطقي: العصفور طائر، وكل الطيور لها أجنحة، إذن العصفور له أجنحة'
+                            },
+                            {
+                                id: 19,
+                                type: 'logic',
+                                question: 'أحمد أطول من سعيد، وسعيد أطول من خالد، إذن:',
+                                options: ['خالد أطول من أحمد', 'أحمد أطول من خالد', 'خالد وأحمد متساويان', 'لا يمكن المقارنة'],
+                                correct: 1,
+                                explanation: 'أحمد > سعيد > خالد، إذن أحمد > خالد'
+                            },
+                            
+                            // أسئلة إضافية
+                            {
+                                id: 20,
+                                type: 'math',
+                                question: '3 × 7 + 4 = ؟',
+                                options: ['21', '25', '28', '31'],
+                                correct: 1,
+                                explanation: '3 × 7 = 21، 21 + 4 = 25'
+                            },
+                            {
+                                id: 21,
+                                type: 'analogy',
+                                question: 'الليل : ظلام = النهار : ؟',
+                                options: ['شمس', 'ضوء', 'صباح', 'قمر'],
+                                correct: 1,
+                                explanation: 'الليل يتميز بالظلام كما النهار يتميز بالضوء'
+                            },
+                            {
+                                id: 22,
+                                type: 'logic',
+                                question: 'إذا كان اليوم الخميس، فما هو اليوم بعد 3 أيام؟',
+                                options: ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء'],
+                                correct: 1,
+                                explanation: 'الخميس + 3 أيام = الأحد'
+                            },
+                            {
+                                id: 23,
+                                type: 'math',
+                                question: '15 ÷ 3 × 2 = ؟',
+                                options: ['2.5', '5', '10', '30'],
+                                correct: 2,
+                                explanation: '15 ÷ 3 = 5، 5 × 2 = 10'
+                            },
+                            {
+                                id: 24,
+                                type: 'math',
+                                question: 'أي من التالي عدد أولي؟',
+                                options: ['9', '11', '15', '21'],
+                                correct: 1,
+                                explanation: '11 عدد أولي لا يقبل القسمة إلا على نفسه وعلى 1'
+                            },
+                            {
+                                id: 25,
+                                type: 'math',
+                                question: 'مربع العدد 9؟',
+                                options: ['18', '27', '81', '90'],
+                                correct: 2,
+                                explanation: '9² = 81'
+                            },
+                            {
+                                id: 26,
+                                type: 'logic',
+                                question: 'الساعة 3:45 تعني:',
+                                options: ['الثالثة والربع', 'الثالثة والنصف', 'الرابعة إلا ربع', 'الرابعة والربع'],
+                                correct: 2,
+                                explanation: '3:45 = الرابعة إلا ربع'
+                            },
+                            {
+                                id: 27,
+                                type: 'knowledge',
+                                question: 'عدد أيام السنة الكبيسة؟',
+                                options: ['364', '365', '366', '367'],
+                                correct: 2,
+                                explanation: 'السنة الكبيسة تحتوي على 366 يوم'
+                            },
+                            {
+                                id: 28,
+                                type: 'geometry',
+                                question: 'مجموع زوايا المثلث؟',
+                                options: ['90°', '180°', '270°', '360°'],
+                                correct: 1,
+                                explanation: 'مجموع زوايا أي مثلث = 180 درجة'
+                            },
+                            {
+                                id: 29,
+                                type: 'math',
+                                question: 'نصف العدد 50؟',
+                                options: ['20', '25', '30', '35'],
+                                correct: 1,
+                                explanation: '50 ÷ 2 = 25'
+                            },
+                            {
+                                id: 30,
+                                type: 'math',
+                                question: 'الكيلومتر = ؟ متر',
+                                options: ['10', '100', '1000', '10000'],
+                                correct: 2,
+                                explanation: 'الكيلومتر = 1000 متر'
+                            }
+                        ]
+                    },
+                    tahsili: {
+                        title: 'الاختبار التحصيلي',
+                        duration: 90, // minutes
+                        questions: [
+                            // الرياضيات
+                            {
+                                id: 1,
+                                type: 'math',
+                                subject: 'calculus',
+                                question: 'مشتقة الدالة f(x) = x² + 3x؟',
+                                options: ['2x + 3', 'x + 3', '2x²', 'x² + 3'],
+                                correct: 0,
+                                explanation: 'مشتقة x² = 2x، مشتقة 3x = 3، إذن المشتقة = 2x + 3'
+                            },
+                            {
+                                id: 2,
+                                type: 'math',
+                                subject: 'trigonometry',
+                                question: 'قيمة sin(90°)؟',
+                                options: ['0', '1', '-1', '0.5'],
+                                correct: 1,
+                                explanation: 'sin(90°) = 1'
+                            },
+                            {
+                                id: 3,
+                                type: 'math',
+                                subject: 'algebra',
+                                question: 'log₁₀(100) = ؟',
+                                options: ['1', '2', '10', '100'],
+                                correct: 1,
+                                explanation: '10² = 100، إذن log₁₀(100) = 2'
+                            },
+                            
+                            // الفيزياء
+                            {
+                                id: 4,
+                                type: 'physics',
+                                subject: 'mechanics',
+                                question: 'وحدة قياس القوة في النظام الدولي؟',
+                                options: ['جول', 'نيوتن', 'واط', 'باسكال'],
+                                correct: 1,
+                                explanation: 'النيوتن (N) هو وحدة القوة في النظام الدولي'
+                            },
+                            {
+                                id: 5,
+                                type: 'physics',
+                                subject: 'mechanics',
+                                question: 'قانون نيوتن الثاني ينص على:',
+                                options: ['F = ma', 'F = mv', 'F = mgh', 'F = ½mv²'],
+                                correct: 0,
+                                explanation: 'القوة = الكتلة × التسارع (F = ma)'
+                            },
+                            {
+                                id: 6,
+                                type: 'physics',
+                                subject: 'optics',
+                                question: 'سرعة الضوء في الفراغ؟',
+                                options: ['3×10⁶ م/ث', '3×10⁷ م/ث', '3×10⁸ م/ث', '3×10⁹ م/ث'],
+                                correct: 2,
+                                explanation: 'سرعة الضوء = 3×10⁸ متر/ثانية'
+                            },
+                            {
+                                id: 7,
+                                type: 'physics',
+                                subject: 'electricity',
+                                question: 'قانون أوم ينص على:',
+                                options: ['V = IR', 'P = VI', 'F = qE', 'E = mc²'],
+                                correct: 0,
+                                explanation: 'الجهد = التيار × المقاومة (V = IR)'
+                            },
+                            
+                            // الكيمياء
+                            {
+                                id: 8,
+                                type: 'chemistry',
+                                subject: 'atomic',
+                                question: 'العدد الذري للكربون؟',
+                                options: ['4', '6', '8', '12'],
+                                correct: 1,
+                                explanation: 'الكربون له 6 بروتونات، إذن عدده الذري = 6'
+                            },
+                            {
+                                id: 9,
+                                type: 'chemistry',
+                                subject: 'compounds',
+                                question: 'الصيغة الكيميائية للماء؟',
+                                options: ['H₂O', 'CO₂', 'NaCl', 'HCl'],
+                                correct: 0,
+                                explanation: 'الماء = H₂O (ذرتان هيدروجين + ذرة أكسجين)'
+                            },
+                            {
+                                id: 10,
+                                type: 'chemistry',
+                                subject: 'bonding',
+                                question: 'نوع الرابطة في جزيء الماء؟',
+                                options: ['أيونية', 'تساهمية قطبية', 'تساهمية غير قطبية', 'فلزية'],
+                                correct: 1,
+                                explanation: 'الماء له رابطة تساهمية قطبية بسبب فرق الكهروسلبية'
+                            },
+                            {
+                                id: 11,
+                                type: 'chemistry',
+                                subject: 'periodic',
+                                question: 'رمز عنصر الذهب؟',
+                                options: ['Go', 'Gd', 'Au', 'Ag'],
+                                correct: 2,
+                                explanation: 'Au هو رمز الذهب (من الكلمة اللاتينية Aurum)'
+                            },
+                            
+                            // الأحياء
+                            {
+                                id: 12,
+                                type: 'biology',
+                                subject: 'cell',
+                                question: 'العضية المسؤولة عن إنتاج الطاقة في الخلية؟',
+                                options: ['النواة', 'الميتوكوندريا', 'الريبوسومات', 'جهاز جولجي'],
+                                correct: 1,
+                                explanation: 'الميتوكوندريا هي مصنع الطاقة في الخلية (ATP)'
+                            },
+                            {
+                                id: 13,
+                                type: 'biology',
+                                subject: 'genetics',
+                                question: 'عدد الكروموسومات في الخلية البشرية؟',
+                                options: ['23', '46', '48', '64'],
+                                correct: 1,
+                                explanation: 'الإنسان لديه 46 كروموسوم (23 زوج)'
+                            },
+                            {
+                                id: 14,
+                                type: 'biology',
+                                subject: 'plant',
+                                question: 'عملية البناء الضوئي تحدث في؟',
+                                options: ['النواة', 'الميتوكوندريا', 'البلاستيدات الخضراء', 'الريبوسومات'],
+                                correct: 2,
+                                explanation: 'البناء الضوئي يحدث في البلاستيدات الخضراء'
+                            },
+                            {
+                                id: 15,
+                                type: 'biology',
+                                subject: 'genetics',
+                                question: 'الحمض النووي DNA يتكون من:',
+                                options: ['بروتينات', 'دهون', 'نيوكليوتيدات', 'كربوهيدرات'],
+                                correct: 2,
+                                explanation: 'DNA يتكون من سلسلة من النيوكليوتيدات'
+                            },
+                            
+                            // المزيد من الأسئلة
+                            {
+                                id: 16,
+                                type: 'physics',
+                                subject: 'energy',
+                                question: 'الطاقة الحركية = ؟',
+                                options: ['mv', '½mv²', 'mgh', 'Fd'],
+                                correct: 1,
+                                explanation: 'الطاقة الحركية = ½ × الكتلة × مربع السرعة'
+                            },
+                            {
+                                id: 17,
+                                type: 'chemistry',
+                                subject: 'solutions',
+                                question: 'pH الماء النقي؟',
+                                options: ['0', '7', '14', '10'],
+                                correct: 1,
+                                explanation: 'pH الماء النقي = 7 (متعادل)'
+                            },
+                            {
+                                id: 18,
+                                type: 'chemistry',
+                                subject: 'periodic',
+                                question: 'الغاز النبيل في الدورة الثالثة؟',
+                                options: ['هيليوم', 'نيون', 'أرجون', 'كريبتون'],
+                                correct: 2,
+                                explanation: 'الأرجون هو الغاز النبيل في الدورة الثالثة'
+                            },
+                            {
+                                id: 19,
+                                type: 'math',
+                                subject: 'geometry',
+                                question: 'معادلة الدائرة التي مركزها الأصل ونصف قطرها 5؟',
+                                options: ['x² + y² = 5', 'x² + y² = 10', 'x² + y² = 25', 'x + y = 25'],
+                                correct: 2,
+                                explanation: 'معادلة الدائرة: x² + y² = r² = 25'
+                            },
+                            {
+                                id: 20,
+                                type: 'chemistry',
+                                subject: 'constants',
+                                question: 'عدد أفوجادرو؟',
+                                options: ['6.02×10²¹', '6.02×10²²', '6.02×10²³', '6.02×10²⁴'],
+                                correct: 2,
+                                explanation: 'عدد أفوجادرو = 6.02×10²³ جزيء/مول'
+                            }
+                        ]
+                    }
+                }
+            },
+            
+            // ========================================
+            // Initialization
+            // ========================================
+            init: function() {
+                console.log('🚀 Initializing ' + this.config.appName);
+                
+                // Load saved data from localStorage
+                this.storage.load();
+                
+                // Initialize UI
+                this.ui.init();
+                
+                // Setup event listeners
+                this.events.init();
+                
+                // Check authentication
+                this.auth.checkAuth();
+                
+                // Load initial content
+                this.content.loadResources();
+                this.content.loadAnnouncements();
+                
+                console.log('✅ Application initialized successfully');
+                
+                // Debug mode
+                if (this.config.debug) {
+                    console.log('📋 Debug Mode Enabled');
+                    console.log('👤 Default Users:');
+                    console.log('   Admin: abdullah_admin / admin123');
+                    console.log('   Principal: saddam_principal / principal123');
+                    console.log('   Teacher: mohammed_teacher / teacher123');
+                }
+            },
+            
+            // ========================================
+            // Storage Management
+            // ========================================
+            storage: {
+                // Save data to localStorage
+                save: function(key, value) {
+                    try {
+                        localStorage.setItem(key, JSON.stringify(value));
+                        return true;
+                    } catch (e) {
+                        console.error('Storage save error:', e);
+                        return false;
+                    }
+                },
+                
+                // Get data from localStorage
+                get: function(key) {
+                    try {
+                        const item = localStorage.getItem(key);
+                        return item ? JSON.parse(item) : null;
+                    } catch (e) {
+                        console.error('Storage get error:', e);
+                        return null;
+                    }
+                },
+                
+                // Remove data from localStorage
+                remove: function(key) {
+                    try {
+                        localStorage.removeItem(key);
+                        return true;
+                    } catch (e) {
+                        console.error('Storage remove error:', e);
+                        return false;
+                    }
+                },
+                
+                // Load all saved data
+                load: function() {
+                    // Load current user
+                    const savedUser = this.get('currentUser');
+                    if (savedUser) {
+                        App.state.currentUser = savedUser;
+                    }
+                    
+                    // Load quiz attempts
+                    const savedAttempts = this.get('quizAttempts');
+                    if (savedAttempts) {
+                        App.data.quizAttempts = savedAttempts;
+                    }
+                    
+                    // Load custom users
+                    const savedUsers = this.get('customUsers');
+                    if (savedUsers) {
+                        App.data.users = { ...App.data.users, ...savedUsers };
+                    }
+                    
+                    // Load announcements
+                    const savedAnnouncements = this.get('announcements');
+                    if (savedAnnouncements) {
+                        App.data.announcements = savedAnnouncements;
+                    }
+                    
+                    // Load resources
+                    const savedResources = this.get('resources');
+                    if (savedResources) {
+                        App.data.resources = savedResources;
+                    }
+                }
+            },
+            
+            // ========================================
+            // UI Management
+            // ========================================
+            ui: {
+                // Initialize UI
+                init: function() {
+                    this.updateAuthUI();
+                    this.updateAdminPanel();
+                },
+                
+                // Update authentication UI
+                updateAuthUI: function() {
+                    const authButtons = document.getElementById('authButtons');
+                    const userInfo = document.getElementById('userInfo');
+                    const currentUserName = document.getElementById('currentUserName');
+                    const currentUserRole = document.getElementById('currentUserRole');
+                    
+                    if (App.state.currentUser) {
+                        // User is logged in
+                        authButtons.classList.add('hidden');
+                        userInfo.classList.remove('hidden');
+                        currentUserName.textContent = App.state.currentUser.name;
+                        currentUserRole.textContent = App.state.currentUser.displayRole;
+                    } else {
+                        // User is logged out
+                        authButtons.classList.remove('hidden');
+                        userInfo.classList.add('hidden');
+                    }
+                },
+                
+                // Update admin panel
+                updateAdminPanel: function() {
+                    const adminPanel = document.getElementById('adminPanel');
+                    
+                    if (App.state.currentUser && 
+                        ['admin', 'principal', 'teacher'].includes(App.state.currentUser.role)) {
+                        adminPanel.classList.remove('hidden');
+                    } else {
+                        adminPanel.classList.add('hidden');
+                    }
+                }
+            },
+            
+            // ========================================
+            // Event Management
+            // ========================================
+            events: {
+                // Initialize event listeners
+                init: function() {
+                    // Prevent default link behavior
+                    document.addEventListener('click', function(e) {
+                        if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+                            e.preventDefault();
+                        }
+                    });
+                    
+                    // Modal click outside to close
+                    const modal = document.getElementById('modal');
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === modal) {
+                            App.modal.close();
+                        }
+                    });
+                    
+                    // Keyboard shortcuts
+                    document.addEventListener('keydown', function(e) {
+                        // Escape key to close modal
+                        if (e.key === 'Escape') {
+                            App.modal.close();
+                        }
+                    });
+                    
+                    // Window resize
+                    window.addEventListener('resize', function() {
+                        // Close mobile menu on resize
+                        if (window.innerWidth > 768) {
+                            const nav = document.getElementById('mainNavigation');
+                            nav.classList.remove('active');
+                            App.state.isMobileMenuOpen = false;
+                        }
+                    });
+                }
+            },
+            
+            // ========================================
+            // Navigation
+            // ========================================
+            navigation: {
+                // Go to specific page
+                goToPage: function(page) {
+                    // Prevent navigation during quiz
+                    if (App.state.quizInProgress) {
+                        if (!confirm('هل أنت متأكد من الخروج من الاختبار؟ سيتم فقدان تقدمك.')) {
+                            return;
+                        }
+                        App.quiz.endQuiz(true);
+                    }
+                    
+                    // Update state
+                    App.state.currentPage = page;
+                    
+                    // Update sections
+                    const sections = document.querySelectorAll('.section');
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    const targetSection = document.getElementById(page);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                    
+                    // Update navigation links
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        if (link.dataset.page === page) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                    
+                    // Special handling for tests page
+                    if (page === 'tests' && !App.state.currentUser) {
+                        App.notifications.show('يجب تسجيل الدخول للوصول إلى الاختبارات', 'warning');
+                        App.auth.showLoginModal();
+                        this.goToPage('home');
+                        return;
+                    }
+                    
+                    // Close mobile menu
+                    this.closeMobileMenu();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    console.log('Navigated to:', page);
+                },
+                
+                // Toggle mobile menu
+                toggleMobileMenu: function() {
+                    const nav = document.getElementById('mainNavigation');
+                    nav.classList.toggle('active');
+                    App.state.isMobileMenuOpen = !App.state.isMobileMenuOpen;
+                },
+                
+                // Close mobile menu
+                closeMobileMenu: function() {
+                    const nav = document.getElementById('mainNavigation');
+                    nav.classList.remove('active');
+                    App.state.isMobileMenuOpen = false;
+                }
+            },
+            
+            // ========================================
+            // Authentication
+            // ========================================
+            auth: {
+                // Show login modal
+                showLoginModal: function() {
+                    const content = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">تسجيل الدخول</h3>
+                        </div>
+                        <form id="loginForm" onsubmit="App.auth.handleLogin(event)">
+                            <div class="form-group">
+                                <label class="form-label">اسم المستخدم</label>
+                                <input type="text" class="form-control" id="loginUsername" required autocomplete="username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">كلمة المرور</label>
+                                <input type="password" class="form-control" id="loginPassword" required autocomplete="current-password">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-sign-in-alt"></i>
+                                تسجيل الدخول
+                            </button>
+                        </form>
+                        <p class="text-center mt-3">
+                            ليس لديك حساب؟ 
+                            <a href="#" onclick="App.auth.showRegisterModal()" style="color: var(--primary-color); font-weight: 600;">
+                                سجل الآن
+                            </a>
+                        </p>
+                    `;
+                    
+                    App.modal.show(content);
+                    
+                    // Focus on username input
+                    setTimeout(() => {
+                        const usernameInput = document.getElementById('loginUsername');
+                        if (usernameInput) {
+                            usernameInput.focus();
+                        }
+                    }, 100);
+                },
+                
+                // Show register modal
+                showRegisterModal: function() {
+                    const content = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">إنشاء حساب جديد</h3>
+                        </div>
+                        <form id="registerForm" onsubmit="App.auth.handleRegister(event)">
+                            <div class="form-group">
+                                <label class="form-label">الاسم الكامل</label>
+                                <input type="text" class="form-control" id="registerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">اسم المستخدم</label>
+                                <input type="text" class="form-control" id="registerUsername" required autocomplete="username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">كلمة المرور</label>
+                                <input type="password" class="form-control" id="registerPassword" required autocomplete="new-password">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">نوع الحساب</label>
+                                <select class="form-control" id="registerRole" required>
+                                    <option value="">اختر نوع الحساب</option>
+                                    <option value="student">طالب</option>
+                                    <option value="teacher">معلم</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-user-plus"></i>
+                                إنشاء الحساب
+                            </button>
+                        </form>
+                        <p class="text-center mt-3">
+                            لديك حساب بالفعل؟ 
+                            <a href="#" onclick="App.auth.showLoginModal()" style="color: var(--primary-color); font-weight: 600;">
+                                سجل دخول
+                            </a>
+                        </p>
+                    `;
+                    
+                    App.modal.show(content);
+                    
+                    // Focus on name input
+                    setTimeout(() => {
+                        const nameInput = document.getElementById('registerName');
+                        if (nameInput) {
+                            nameInput.focus();
+                        }
+                    }, 100);
+                },
+                
+                // Handle login
+                handleLogin: function(event) {
+                    event.preventDefault();
+                    
+                    const username = document.getElementById('loginUsername').value.trim();
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    // Check credentials
+                    const user = App.data.users[username];
+                    
+                    if (user && user.password === password) {
+                        // Login successful
+                        App.state.currentUser = {
+                            username: username,
+                            ...user
+                        };
+                        
+                        // Save to storage
+                        App.storage.save('currentUser', App.state.currentUser);
+                        
+                        // Update UI
+                        App.ui.updateAuthUI();
+                        App.ui.updateAdminPanel();
+                        
+                        // Close modal
+                        App.modal.close();
+                        
+                        // Show success notification
+                        App.notifications.show(`مرحباً ${user.name}!`, 'success');
+                        
+                        console.log('User logged in:', username);
+                    } else {
+                        // Login failed
+                        App.notifications.show('اسم المستخدم أو كلمة المرور غير صحيحة', 'error');
+                    }
+                },
+                
+                // Handle register
+                handleRegister: function(event) {
+                    event.preventDefault();
+                    
+                    const name = document.getElementById('registerName').value.trim();
+                    const username = document.getElementById('registerUsername').value.trim();
+                    const password = document.getElementById('registerPassword').value;
+                    const role = document.getElementById('registerRole').value;
+                    
+                    // Check if username exists
+                    if (App.data.users[username]) {
+                        App.notifications.show('اسم المستخدم موجود بالفعل', 'error');
+                        return;
+                    }
+                    
+                    // Create new user
+                    const displayRole = role === 'teacher' ? 'معلم' : 'طالب';
+                    const newUser = {
+                        name: name,
+                        password: password,
+                        role: role,
+                        displayRole: displayRole
+                    };
+                    
+                    // Add to users
+                    App.data.users[username] = newUser;
+                    
+                    // Save custom users separately
+                    const customUsers = App.storage.get('customUsers') || {};
+                    customUsers[username] = newUser;
+                    App.storage.save('customUsers', customUsers);
+                    
+                    // Auto login
+                    App.state.currentUser = {
+                        username: username,
+                        ...newUser
+                    };
+                    
+                    // Save to storage
+                    App.storage.save('currentUser', App.state.currentUser);
+                    
+                    // Update UI
+                    App.ui.updateAuthUI();
+                    App.ui.updateAdminPanel();
+                    
+                    // Close modal
+                    App.modal.close();
+                    
+                    // Show success notification
+                    App.notifications.show('تم إنشاء حسابك بنجاح!', 'success');
+                    
+                    console.log('New user registered:', username);
+                },
+                
+                // Logout
+                logout: function() {
+                    // Confirm logout
+                    if (!confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                        return;
+                    }
+                    
+                    // Clear user
+                    App.state.currentUser = null;
+                    
+                    // Clear from storage
+                    App.storage.remove('currentUser');
+                    
+                    // Update UI
+                    App.ui.updateAuthUI();
+                    App.ui.updateAdminPanel();
+                    
+                    // Navigate to home
+                    App.navigation.goToPage('home');
+                    
+                    // Show notification
+                    App.notifications.show('تم تسجيل الخروج بنجاح', 'info');
+                    
+                    console.log('User logged out');
+                },
+                
+                // Check authentication
+                checkAuth: function() {
+                    if (App.state.currentUser) {
+                        App.ui.updateAuthUI();
+                        App.ui.updateAdminPanel();
+                        console.log('User authenticated:', App.state.currentUser.username);
+                    }
+                }
+            },
+            
+            // ========================================
+            // Modal Management
+            // ========================================
+            modal: {
+                // Show modal
+                show: function(content) {
+                    const modal = document.getElementById('modal');
+                    const modalBody = document.getElementById('modalBody');
+                    
+                    modalBody.innerHTML = content;
+                    modal.classList.add('active');
+                    
+                    // Prevent body scroll
+                    document.body.style.overflow = 'hidden';
+                },
+                
+                // Close modal
+                close: function() {
+                    const modal = document.getElementById('modal');
+                    modal.classList.remove('active');
+                    
+                    // Restore body scroll
+                    document.body.style.overflow = '';
+                    
+                    // Clear modal content
+                    setTimeout(() => {
+                        document.getElementById('modalBody').innerHTML = '';
+                    }, 300);
+                }
+            },
+            
+            // ========================================
+            // Notifications
+            // ========================================
+            notifications: {
+                // Show notification
+                show: function(message, type = 'info') {
+                    const notification = document.createElement('div');
+                    notification.className = `notification ${type}`;
+                    
+                    const icon = {
+                        success: 'check-circle',
+                        error: 'times-circle',
+                        warning: 'exclamation-triangle',
+                        info: 'info-circle'
+                    }[type];
+                    
+                    notification.innerHTML = `
+                        <i class="fas fa-${icon}"></i>
+                        <span>${message}</span>
+                    `;
+                    
+                    document.body.appendChild(notification);
+                    
+                    // Auto remove after 4 seconds
+                    setTimeout(() => {
+                        notification.style.transform = 'translateX(400px)';
+                        notification.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 300);
+                    }, 4000);
+                }
+            },
+            
+            // ========================================
+            // Quiz Management
+            // ========================================
+            quiz: {
+                // Start quiz
+                startQuiz: function(type) {
+                    // Check authentication
+                    if (!App.state.currentUser) {
+                        App.notifications.show('يجب تسجيل الدخول أولاً', 'error');
+                        App.auth.showLoginModal();
+                        return;
+                    }
+                    
+                    // Check if already attempted
+                    const attemptKey = `${App.state.currentUser.username}_${type}`;
+                    if (App.data.quizAttempts[attemptKey]) {
+                        App.notifications.show('لقد أجريت هذا الاختبار من قبل. محاولة واحدة فقط مسموحة لكل اختبار.', 'warning');
+                        return;
+                    }
+                    
+                    // Initialize quiz
+                    App.state.currentQuiz = App.data.quizData[type];
+                    App.state.currentQuestion = 0;
+                    App.state.quizAnswers = [];
+                    App.state.timeRemaining = App.state.currentQuiz.duration * 60;
+                    App.state.quizInProgress = true;
+                    
+                    // Hide test list and show quiz
+                    document.getElementById('testsListView').classList.add('hidden');
+                    document.getElementById('quizView').classList.remove('hidden');
+                    
+                    // Render quiz
+                    this.renderQuiz();
+                    
+                    // Start timer
+                    this.startTimer();
+                    
+                    console.log('Quiz started:', type);
+                },
+                
+                // Render quiz
+                renderQuiz: function() {
+                    const quiz = App.state.currentQuiz;
+                    const question = quiz.questions[App.state.currentQuestion];
+                    const progress = ((App.state.currentQuestion + 1) / quiz.questions.length) * 100;
+                    
+                    const quizView = document.getElementById('quizView');
+                    
+                    quizView.innerHTML = `
+                        <div class="quiz-header">
+                            <h3 class="quiz-title">${quiz.title}</h3>
+                            <p class="quiz-info">السؤال ${App.state.currentQuestion + 1} من ${quiz.questions.length}</p>
+                        </div>
+                        
+                        <div class="quiz-timer ${App.state.timeRemaining <= 300 ? 'warning' : ''}" id="quizTimer">
+                            <i class="fas fa-clock"></i>
+                            الوقت المتبقي: ${this.formatTime(App.state.timeRemaining)}
+                        </div>
+                        
+                        <div class="quiz-progress">
+                            <div class="quiz-progress-bar" style="width: ${progress}%"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            ${question.question}
+                        </div>
+                        
+                        <div class="quiz-options">
+                            ${question.options.map((option, index) => `
+                                <div class="quiz-option ${App.state.quizAnswers[App.state.currentQuestion] === index ? 'selected' : ''}" 
+                                     onclick="App.quiz.selectAnswer(${index})">
+                                    <span style="font-weight: 600;">${String.fromCharCode(65 + index)})</span> ${option}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="quiz-controls">
+                            ${App.state.currentQuestion > 0 ? `
+                                <button class="btn btn-secondary" onclick="App.quiz.previousQuestion()">
+                                    <i class="fas fa-arrow-right"></i>
+                                    السابق
+                                </button>
+                            ` : '<div></div>'}
+                            
+                            <button class="btn btn-primary" 
+                                    onclick="App.quiz.nextQuestion()" 
+                                    ${App.state.quizAnswers[App.state.currentQuestion] === undefined ? 'disabled' : ''}>
+                                ${App.state.currentQuestion === quiz.questions.length - 1 ? 'إنهاء الاختبار' : 'التالي'}
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                        </div>
+                    `;
+                },
+                
+                // Select answer
+                selectAnswer: function(index) {
+                    App.state.quizAnswers[App.state.currentQuestion] = index;
+                    this.renderQuiz();
+                },
+                
+                // Next question
+                nextQuestion: function() {
+                    if (App.state.currentQuestion < App.state.currentQuiz.questions.length - 1) {
+                        App.state.currentQuestion++;
+                        this.renderQuiz();
+                    } else {
+                        this.endQuiz();
+                    }
+                },
+                
+                // Previous question
+                previousQuestion: function() {
+                    if (App.state.currentQuestion > 0) {
+                        App.state.currentQuestion--;
+                        this.renderQuiz();
+                    }
+                },
+                
+                // Start timer
+                startTimer: function() {
+                    App.state.quizTimer = setInterval(() => {
+                        App.state.timeRemaining--;
+                        
+                        // Update timer display
+                        const timerElement = document.getElementById('quizTimer');
+                        if (timerElement) {
+                            timerElement.innerHTML = `
+                                <i class="fas fa-clock"></i>
+                                الوقت المتبقي: ${this.formatTime(App.state.timeRemaining)}
+                            `;
+                            
+                            // Add warning class
+                            if (App.state.timeRemaining <= 300) {
+                                timerElement.classList.add('warning');
+                            }
+                        }
+                        
+                        // End quiz if time is up
+                        if (App.state.timeRemaining <= 0) {
+                            this.endQuiz(true);
+                        }
+                    }, 1000);
+                },
+                
+                // End quiz
+                endQuiz: function(timeUp = false) {
+                    // Clear timer
+                    if (App.state.quizTimer) {
+                        clearInterval(App.state.quizTimer);
+                        App.state.quizTimer = null;
+                    }
+                    
+                    // Calculate score
+                    const quiz = App.state.currentQuiz;
+                    let correctAnswers = 0;
+                    
+                    quiz.questions.forEach((question, index) => {
+                        if (App.state.quizAnswers[index] === question.correct) {
+                            correctAnswers++;
+                        }
+                    });
+                    
+                    const score = Math.round((correctAnswers / quiz.questions.length) * 100);
+                    
+                    // Save attempt
+                    const quizType = quiz === App.data.quizData.qudurat ? 'qudurat' : 'tahsili';
+                    const attemptKey = `${App.state.currentUser.username}_${quizType}`;
+                    
+                    App.data.quizAttempts[attemptKey] = {
+                        score: score,
+                        correctAnswers: correctAnswers,
+                        totalQuestions: quiz.questions.length,
+                        date: new Date().toLocaleDateString('ar-SA'),
+                        timeUp: timeUp
+                    };
+                    
+                    // Save to storage
+                    App.storage.save('quizAttempts', App.data.quizAttempts);
+                    
+                    // Show results
+                    this.showResults(score, correctAnswers, timeUp);
+                    
+                    // Reset quiz state
+                    App.state.quizInProgress = false;
+                    
+                    console.log('Quiz ended. Score:', score);
+                },
+                
+                // Show results
+                showResults: function(score, correctAnswers, timeUp) {
+                    const quiz = App.state.currentQuiz;
+                    
+                    // Determine score class
+                    let scoreClass = '';
+                    let scoreMessage = '';
+                    
+                    if (score >= 85) {
+                        scoreClass = 'excellent';
+                        scoreMessage = 'ممتاز جداً! أداء استثنائي';
+                    } else if (score >= 70) {
+                        scoreClass = 'good';
+                        scoreMessage = 'جيد جداً! أداء متميز';
+                    } else if (score >= 60) {
+                        scoreClass = 'good';
+                        scoreMessage = 'جيد! يمكنك التحسن أكثر';
+                    } else {
+                        scoreClass = 'poor';
+                        scoreMessage = 'تحتاج إلى مزيد من المذاكرة';
+                    }
+                    
+                    const quizView = document.getElementById('quizView');
+                    
+                    quizView.innerHTML = `
+                        <div class="quiz-results">
+                            <h2>انتهى الاختبار!</h2>
+                            
+                            ${timeUp ? '<p style="color: var(--danger-color); font-weight: 600;">انتهى الوقت المحدد</p>' : ''}
+                            
+                            <div class="quiz-score ${scoreClass}">
+                                ${score}%
+                            </div>
+                            
+                            <p style="font-size: var(--font-xl); margin-bottom: var(--spacing-lg);">
+                                ${scoreMessage}
+                            </p>
+                            
+                            <p style="margin-bottom: var(--spacing-xl);">
+                                حصلت على ${correctAnswers} إجابة صحيحة من ${quiz.questions.length}
+                            </p>
+                            
+                            <div style="max-height: 400px; overflow-y: auto; margin-bottom: var(--spacing-xl); text-align: right;">
+                                ${quiz.questions.map((question, index) => {
+                                    const userAnswer = App.state.quizAnswers[index];
+                                    const isCorrect = userAnswer === question.correct;
+                                    
+                                    return `
+                                        <div class="card mb-2">
+                                            <h4 style="color: ${isCorrect ? 'var(--success-color)' : 'var(--danger-color)'}; margin-bottom: var(--spacing-sm);">
+                                                ${isCorrect ? '✓' : '✗'} السؤال ${index + 1}: ${question.question}
+                                            </h4>
+                                            <p style="margin-bottom: var(--spacing-xs);">
+                                                إجابتك: ${userAnswer !== undefined ? question.options[userAnswer] : 'لم تجب'}
+                                            </p>
+                                            ${!isCorrect ? `
+                                                <p style="color: var(--success-color); margin-bottom: var(--spacing-xs);">
+                                                    الإجابة الصحيحة: ${question.options[question.correct]}
+                                                </p>
+                                            ` : ''}
+                                            <p style="color: var(--gray-color); font-style: italic; font-size: var(--font-sm);">
+                                                <i class="fas fa-lightbulb"></i> ${question.explanation}
+                                            </p>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                            
+                            <button class="btn btn-primary btn-lg" onclick="App.quiz.resetQuiz()">
+                                العودة للاختبارات
+                            </button>
+                        </div>
+                    `;
+                },
+                
+                // Reset quiz
+                resetQuiz: function() {
+                    // Show test list and hide quiz
+                    document.getElementById('testsListView').classList.remove('hidden');
+                    document.getElementById('quizView').classList.add('hidden');
+                    
+                    // Reset state
+                    App.state.currentQuiz = null;
+                    App.state.currentQuestion = 0;
+                    App.state.quizAnswers = [];
+                    App.state.timeRemaining = 0;
+                    App.state.quizInProgress = false;
+                },
+                
+                // Format time
+                formatTime: function(seconds) {
+                    const minutes = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+            },
+            
+            // ========================================
+            // Admin Functions
+            // ========================================
+            admin: {
+                // Show add announcement modal
+                showAddAnnouncementModal: function() {
+                    if (!App.state.currentUser || !['admin', 'principal', 'teacher'].includes(App.state.currentUser.role)) {
+                        App.notifications.show('ليس لديك صلاحية لإضافة الإعلانات', 'error');
+                        return;
+                    }
+                    
+                    const content = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">إضافة إعلان جديد</h3>
+                        </div>
+                        <form id="announcementForm" onsubmit="App.admin.handleAddAnnouncement(event)">
+                            <div class="form-group">
+                                <label class="form-label">عنوان الإعلان</label>
+                                <input type="text" class="form-control" id="announcementTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">محتوى الإعلان</label>
+                                <textarea class="form-control" id="announcementContent" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-plus"></i>
+                                إضافة الإعلان
+                            </button>
+                        </form>
+                    `;
+                    
+                    App.modal.show(content);
+                },
+                
+                // Handle add announcement
+                handleAddAnnouncement: function(event) {
+                    event.preventDefault();
+                    
+                    const title = document.getElementById('announcementTitle').value.trim();
+                    const content = document.getElementById('announcementContent').value.trim();
+                    
+                    const announcement = {
+                        id: Date.now(),
+                        title: title,
+                        content: content,
+                        date: new Date().toLocaleDateString('ar-SA'),
+                        author: App.state.currentUser.name
+                    };
+                    
+                    // Add to announcements
+                    App.data.announcements.unshift(announcement);
+                    
+                    // Save to storage
+                    App.storage.save('announcements', App.data.announcements);
+                    
+                    // Reload announcements
+                    App.content.loadAnnouncements();
+                    
+                    // Close modal
+                    App.modal.close();
+                    
+                    // Show notification
+                    App.notifications.show('تم إضافة الإعلان بنجاح', 'success');
+                    
+                    console.log('Announcement added:', announcement);
+                },
+                
+                // Show add resource modal
+                showAddResourceModal: function() {
+                    if (!App.state.currentUser || !['admin', 'principal', 'teacher'].includes(App.state.currentUser.role)) {
+                        App.notifications.show('ليس لديك صلاحية لإضافة المصادر', 'error');
+                        return;
+                    }
+                    
+                    const content = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">إضافة مصدر تعليمي</h3>
+                        </div>
+                        <form id="resourceForm" onsubmit="App.admin.handleAddResource(event)">
+                            <div class="form-group">
+                                <label class="form-label">عنوان المصدر</label>
+                                <input type="text" class="form-control" id="resourceTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">وصف المصدر</label>
+                                <textarea class="form-control" id="resourceDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">نوع المصدر</label>
+                                <select class="form-control" id="resourceType" required>
+                                    <option value="">اختر النوع</option>
+                                    <option value="video">فيديو تعليمي</option>
+                                    <option value="pdf">ملف PDF</option>
+                                    <option value="link">رابط خارجي</option>
+                                    <option value="questions">بنك أسئلة</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-plus"></i>
+                                إضافة المصدر
+                            </button>
+                        </form>
+                    `;
+                    
+                    App.modal.show(content);
+                },
+                
+                // Handle add resource
+                handleAddResource: function(event) {
+                    event.preventDefault();
+                    
+                    const title = document.getElementById('resourceTitle').value.trim();
+                    const description = document.getElementById('resourceDescription').value.trim();
+                    const type = document.getElementById('resourceType').value;
+                    
+                    const iconMap = {
+                        video: 'fas fa-video',
+                        pdf: 'fas fa-file-pdf',
+                        link: 'fas fa-link',
+                        questions: 'fas fa-question-circle'
+                    };
+                    
+                    const resource = {
+                        id: Date.now(),
+                        title: title,
+                        description: description,
+                        type: type,
+                        icon: iconMap[type],
+                        author: App.state.currentUser.name,
+                        date: new Date().toLocaleDateString('ar-SA')
+                    };
+                    
+                    // Add to resources
+                    App.data.resources.push(resource);
+                    
+                    // Save to storage
+                    App.storage.save('resources', App.data.resources);
+                    
+                    // Reload resources
+                    App.content.loadResources();
+                    
+                    // Close modal
+                    App.modal.close();
+                    
+                    // Show notification
+                    App.notifications.show('تم إضافة المصدر بنجاح', 'success');
+                    
+                    console.log('Resource added:', resource);
+                },
+                
+                // Show users management
+                showUsersManagement: function() {
+                    if (!App.state.currentUser || App.state.currentUser.role !== 'admin') {
+                        App.notifications.show('ليس لديك صلاحية لإدارة المستخدمين', 'error');
+                        return;
+                    }
+                    
+                    const users = Object.entries(App.data.users);
+                    
+                    const content = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">إدارة المستخدمين</h3>
+                        </div>
+                        <div style="max-height: 500px; overflow-y: auto;">
+                            ${users.map(([username, user]) => {
+                                const isDefaultUser = ['abdullah_admin', 'saddam_principal', 'mohammed_teacher'].includes(username);
+                                
+                                return `
+                                    <div class="card mb-2">
+                                        <div class="flex-between">
+                                            <div>
+                                                <strong>${user.name}</strong>
+                                                <br>
+                                                <small style="color: var(--gray-color);">
+                                                    @${username} - ${user.displayRole}
+                                                </small>
+                                            </div>
+                                            <div>
+                                                ${!isDefaultUser ? `
+                                                    <button class="btn btn-danger btn-sm" onclick="App.admin.deleteUser('${username}')">
+                                                        <i class="fas fa-trash"></i>
+                                                        حذف
+                                                    </button>
+                                                ` : `
+                                                    <span class="text-muted" style="font-size: var(--font-sm);">
+                                                        حساب أساسي
+                                                    </span>
+                                                `}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                    
+                    App.modal.show(content);
+                },
+                
+                // Delete user
+                deleteUser: function(username) {
+                    if (!confirm(`هل أنت متأكد من حذف المستخدم ${username}؟`)) {
+                        return;
+                    }
+                    
+                    // Delete user
+                    delete App.data.users[username];
+                    
+                    // Update custom users in storage
+                    const customUsers = App.storage.get('customUsers') || {};
+                    delete customUsers[username];
+                    App.storage.save('customUsers', customUsers);
+                    
+                    // Refresh modal
+                    this.showUsersManagement();
+                    
+                    // Show notification
+                    App.notifications.show('تم حذف المستخدم بنجاح', 'success');
+                    
+                    console.log('User deleted:', username);
+                },
+                
+                // Show statistics
+                showStatistics: function() {
+                    const stats = {
+                        totalUsers: Object.keys(App.data.users).length,
+                        totalAttempts: Object.keys(App.data.quizAttempts).length,
+                        totalAnnouncements: App.data.announcements.length,
+                        totalResources: App.data.resources.length
+                    };
+                    
+                    // Calculate average scores
+                    let quduratScores = [];
+                    let tahsiliScores = [];
+                    
+                    Object.entries(App.data.quizAttempts).forEach(([key, attempt]) => {
+                        if (key.includes('qudurat')) {
+                            quduratScores.push(attempt.score);
+                        } else if (key.includes('tahsili')) {
+                            tahsiliScores.push(attempt.score);
+                        }
+                    });
+                    
+                    const avgQuduratScore = quduratScores.length > 0 
+                        ? Math.round(quduratScores.reduce((a, b) => a + b, 0) / quduratScores.length)
+                        : 0;
+                        
+                    const avgTahsiliScore = tahsiliScores.length > 0
+                        ? Math.round(tahsiliScores.reduce((a, b) => a + b, 0) / tahsiliScores.length)
+                        : 0;
+                    
+                    const content = `
+                        <div class="modal-header">
+                            <h3 class="modal-title">إحصائيات المنصة</h3>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 mb-3">
+                            <div class="card text-center">
+                                <h2 style="color: var(--primary-color); margin-bottom: var(--spacing-sm);">${stats.totalUsers}</h2>
+                                <p>إجمالي المستخدمين</p>
+                            </div>
+                            <div class="card text-center">
+                                <h2 style="color: var(--primary-color); margin-bottom: var(--spacing-sm);">${stats.totalAttempts}</h2>
+                                <p>محاولات الاختبار</p>
+                            </div>
+                            <div class="card text-center">
+                                <h2 style="color: var(--primary-color); margin-bottom: var(--spacing-sm);">${stats.totalAnnouncements}</h2>
+                                <p>الإعلانات المنشورة</p>
+                            </div>
+                            <div class="card text-center">
+                                <h2 style="color: var(--primary-color); margin-bottom: var(--spacing-sm);">${stats.totalResources}</h2>
+                                <p>المصادر التعليمية</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mb-2">متوسط النتائج</h4>
+                        <div class="grid grid-cols-2">
+                            <div class="card text-center">
+                                <h3 style="color: var(--success-color);">${avgQuduratScore}%</h3>
+                                <p>اختبار القدرات</p>
+                                <small>${quduratScores.length} محاولة</small>
+                            </div>
+                            <div class="card text-center">
+                                <h3 style="color: var(--success-color);">${avgTahsiliScore}%</h3>
+                                <p>الاختبار التحصيلي</p>
+                                <small>${tahsiliScores.length} محاولة</small>
+                            </div>
+                        </div>
+                        
+                        ${App.state.currentUser.role === 'admin' ? `
+                            <h4 class="mt-3 mb-2">آخر المحاولات</h4>
+                            <div style="max-height: 200px; overflow-y: auto;">
+                                ${Object.entries(App.data.quizAttempts).slice(-5).reverse().map(([key, attempt]) => `
+                                    <div class="card mb-1" style="padding: var(--spacing-md);">
+                                        <div class="flex-between">
+                                            <small>${key}</small>
+                                            <strong style="color: ${attempt.score >= 70 ? 'var(--success-color)' : 'var(--danger-color)'};">
+                                                ${attempt.score}%
+                                            </strong>
+                                        </div>
+                                        <small style="color: var(--gray-color);">${attempt.date}</small>
+                                    </div>
+                                `).join('') || '<p class="text-center">لا توجد محاولات بعد</p>'}
+                            </div>
+                        ` : ''}
+                    `;
+                    
+                    App.modal.show(content);
+                }
+            },
+            
+            // ========================================
+            // Content Management
+            // ========================================
+            content: {
+                // Load resources
+                loadResources: function() {
+                    const resourcesGrid = document.getElementById('resourcesGrid');
+                    if (!resourcesGrid) return;
+                    
+                    resourcesGrid.innerHTML = App.data.resources.map(resource => `
+                        <div class="resource-card" onclick="App.content.openResource(${resource.id})">
+                            <div class="resource-icon">
+                                <i class="${resource.icon}"></i>
+                            </div>
+                            <h3 class="resource-title">${resource.title}</h3>
+                            <p class="resource-description">${resource.description}</p>
+                            <button class="btn btn-primary btn-block">
+                                <i class="fas fa-external-link-alt"></i>
+                                فتح المصدر
+                            </button>
+                        </div>
+                    `).join('');
+                },
+                
+                // Load announcements
+                loadAnnouncements: function() {
+                    const announcementsList = document.getElementById('announcementsList');
+                    if (!announcementsList) return;
+                    
+                    if (App.data.announcements.length === 0) {
+                        announcementsList.innerHTML = '<p class="text-center">لا توجد إعلانات حالياً</p>';
+                        return;
+                    }
+                    
+                    announcementsList.innerHTML = App.data.announcements.map(announcement => `
+                        <div class="announcement">
+                            <h3 class="announcement-title">${announcement.title}</h3>
+                            <div class="announcement-meta">
+                                <span><i class="fas fa-calendar"></i> ${announcement.date}</span>
+                                <span><i class="fas fa-user"></i> ${announcement.author}</span>
+                            </div>
+                            <div class="announcement-content">
+                                ${announcement.content}
+                            </div>
+                        </div>
+                    `).join('');
+                },
+                
+                // Open resource
+                openResource: function(id) {
+                    const resource = App.data.resources.find(r => r.id === id);
+                    if (resource) {
+                        App.notifications.show(`تم فتح: ${resource.title}`, 'info');
+                        // In a real application, this would open the actual resource
+                        console.log('Resource opened:', resource);
+                    }
+                }
+            },
+            
+            // ========================================
+            // Study Plans
+            // ========================================
+            plans: {
+                // Download plan
+                downloadPlan: function(type) {
+                    const plans = {
+                        qudurat: 'خطة القدرات العامة',
+                        tahsili: 'خطة التحصيلي',
+                        daily: 'الجدول اليومي'
+                    };
+                    
+                    App.notifications.show(`جاري تحميل ${plans[type]}...`, 'info');
+                    
+                    // Simulate download
+                    setTimeout(() => {
+                        App.notifications.show(`تم تحميل ${plans[type]} بنجاح!`, 'success');
+                    }, 1500);
+                    
+                    console.log('Plan download requested:', type);
+                }
+            },
+            
+            // ========================================
+            // Contact
+            // ========================================
+            contact: {
+                // Handle contact form submission
+                handleSubmit: function(event) {
+                    event.preventDefault();
+                    
+                    const name = document.getElementById('contactName').value.trim();
+                    const email = document.getElementById('contactEmail').value.trim();
+                    const subject = document.getElementById('contactSubject').value;
+                    const message = document.getElementById('contactMessage').value.trim();
+                    
+                    // Simulate sending
+                    App.notifications.show('جاري إرسال رسالتك...', 'info');
+                    
+                    setTimeout(() => {
+                        App.notifications.show('تم إرسال رسالتك بنجاح! سنرد عليك في أقرب وقت ممكن.', 'success');
+                        
+                        // Reset form
+                        event.target.reset();
+                        
+                        console.log('Contact form submitted:', { name, email, subject, message });
+                    }, 1500);
+                }
+            },
+            
+            // ========================================
+            // Social Links
+            // ========================================
+            social: {
+                // Open social link
+                openLink: function(platform) {
+                    const links = {
+                        twitter: 'https://twitter.com',
+                        instagram: 'https://instagram.com',
+                        youtube: 'https://youtube.com',
+                        telegram: 'https://t.me'
+                    };
+                    
+                    if (links[platform]) {
+                        window.open(links[platform], '_blank');
+                        console.log('Social link opened:', platform);
+                    }
+                }
+            }
+        };
+        
+        // ============================================
+        // Initialize Application
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            App.init();
+        });
+        
+        // ============================================
+        // Prevent form resubmission on refresh
+        // ============================================
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</body>
+</html>
