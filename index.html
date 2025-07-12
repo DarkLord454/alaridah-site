@@ -3700,12 +3700,11 @@
             window.history.replaceState(null, null, window.location.href);
         }
     </script>
-
-<!-- ربط كامل بمكتبة Supabase -->
+    
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script>
-  const SUPABASE_URL = 'https://rzxpjbxvcbjxfydmspyl.supabase.co'; // غيّرها
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6eHBqYnh2Y2JqeGZ5ZG1zcHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjUzMTYsImV4cCI6MjA2NzkwMTMxNn0.7juqez5kecDCRkM51bCYeNu_Ek_yaBGMRFQLZ-qyM90...'; // غيّرها بمفتاح anon الخاص بك
+  const SUPABASE_URL = 'https://rzxpjbxvcbjxfydmspyl.supabase.co'; 
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6eHBqYnh2Y2JqeGZ5ZG1zcHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjUzMTYsImV4cCI6MjA2NzkwMTMxNn0.7juqez5kecDCRkM51bCYeNu_Ek_yaBGMRFQLZ-qyM90';
 
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -3796,5 +3795,6 @@
     }
   }
 </script>
+    
 </body>
 </html>
