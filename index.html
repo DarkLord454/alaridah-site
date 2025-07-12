@@ -1871,19 +1871,19 @@
                         name: 'عبدالله حسين نخيفي',
                         password: 'admin123',
                         role: 'admin',
-                        displayRole: 'مدير الموقع ومطوره'
+                        displayRole: 'مدير الموقع'
                     },
                     'saddam_principal': {
                         name: 'أستاذ صدام حسين هزازي',
                         password: 'principal123',
                         role: 'principal',
-                        displayRole: 'مدير ثانوية العارضة'
+                        displayRole: 'مدير المدرسة'
                     },
                     'mohammed_teacher': {
                         name: 'أستاذ محمد عبده هزازي',
                         password: 'teacher123',
                         role: 'teacher',
-                        displayRole: 'النشاط الطلابي'
+                        displayRole: 'معلم'
                     }
                 },
                 
@@ -1906,14 +1906,16 @@
                         date: new Date().toLocaleDateString('ar-SA'),
                         author: 'قسم الإرشاد الأكاديمي'
                     }
-                {
+
+{
                         id: 3,
                         title: 'مطلوب مبرمج',
                         content: 'يسر إدارة المدرسة الإعلان عن فتح باب التسجيل لاختبارات القدرات العامة للفترة الثانية من العام الدراسي. التسجيل متاح حتى نهاية الأسبوع القادم.',
                         date: new Date().toLocaleDateString('ar-SA'),
                         author: 'إدارة الموقع'
                     },
-                
+
+
                 ],
                 
                 // Resources
@@ -3698,5 +3700,101 @@
             window.history.replaceState(null, null, window.location.href);
         }
     </script>
+
+<!-- ربط كامل بمكتبة Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const SUPABASE_URL = 'https://rzxpjbxvcbjxfydmspyl.supabase.co'; // غيّرها
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6eHBqYnh2Y2JqeGZ5ZG1zcHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjUzMTYsImV4cCI6MjA2NzkwMTMxNn0.7juqez5kecDCRkM51bCYeNu_Ek_yaBGMRFQLZ-qyM90...'; // غيّرها بمفتاح anon الخاص بك
+
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // إنشاء حساب جديد
+  async function registerUser(email, password, name) {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } }
+    });
+    if (error) return alert(error.message);
+    alert('تم إنشاء الحساب بنجاح');
+  }
+
+  // تسجيل الدخول
+  async function loginUser(email, password) {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    if (error) return alert(error.message);
+    alert('تم تسجيل الدخول');
+  }
+
+  // تسجيل الخروج
+  async function logoutUser() {
+    await supabase.auth.signOut();
+    alert('تم تسجيل الخروج');
+  }
+
+  // تعديل بيانات المستخدم
+  async function updateUserProfile(updates) {
+    const { data, error } = await supabase.auth.updateUser({ data: updates });
+    if (error) return alert(error.message);
+    alert('تم تحديث البيانات');
+  }
+
+  // إرسال نموذج التواصل
+  async function sendContactMessage(name, email, subject, message) {
+    const { data, error } = await supabase.from('contact_messages').insert([
+      { name, email, subject, message }
+    ]);
+    if (error) return alert(error.message);
+    alert('تم إرسال الرسالة');
+  }
+
+  // إضافة إعلان
+  async function addAnnouncement(title, content, author) {
+    const { data, error } = await supabase.from('announcements').insert([
+      { title, content, author }
+    ]);
+    if (error) return alert(error.message);
+    alert('تمت إضافة الإعلان');
+  }
+
+  // حذف إعلان
+  async function deleteAnnouncement(id) {
+    const { data, error } = await supabase.from('announcements').delete().eq('id', id);
+    if (error) return alert(error.message);
+    alert('تم حذف الإعلان');
+  }
+
+  // إضافة مصدر تعليمي
+  async function addResource(title, description, type, author) {
+    const { data, error } = await supabase.from('resources').insert([
+      { title, description, type, author }
+    ]);
+    if (error) return alert(error.message);
+    alert('تمت إضافة المصدر');
+  }
+
+  // عرض إحصائيات الدخول والخروج
+  async function logUserAction(user_id, action) {
+    await supabase.from('login_logs').insert([
+      { user_id, action }
+    ]);
+  }
+
+  // استخدام في النموذج
+  App.contact = {
+    handleSubmit: async function (e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const subject = document.getElementById('contactSubject').value;
+      const message = document.getElementById('contactMessage').value;
+      await sendContactMessage(name, email, subject, message);
+    }
+  }
+</script>
 </body>
 </html>
